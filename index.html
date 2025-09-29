@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ZenChain Testnet Deploy</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- Centered header -->
+    <header class="top center-header">
+      <div class="logo-box">
+        <img src="https://i.imgur.com/bURhDDi.jpeg" alt="ZenChain Logo">
+      </div>
+      <div class="title">
+        <h1>ZenChain Testnet</h1>
+        <p class="tag">Direct Deploy (MetaMask signs)</p>
+      </div>
+    </header>
+
+    <!-- Centered wallet connect -->
+    <div class="controls center-header">
+      <button id="connectBtn">🔗 Connect Wallet</button>
+    </div>
+
+    <!-- Deploy section -->
+    <main class="center-header">
+      <section class="deploy-section">
+        <h2>Deploy Contract</h2>
+
+        <label>Constructor arguments (JSON array) — optional</label>
+        <input id="ctorInput" placeholder='Example: ["ZenChain","ZTC",18,1000000]' />
+
+        <div class="row actions">
+          <button id="deployBtn" class="primary">🚀 Deploy (direct)</button>
+        </div>
+
+        <div id="loading" class="status" style="display:none;">⏳ Sending transaction...</div>
+        <div id="status" class="status">Not connected</div>
+        <div id="result" class="result" style="display:none;"></div>
+        <button id="copyBtn" style="display:none;">📋 Copy Result</button>
+      </section>
+    </main>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6/dist/ethers.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
