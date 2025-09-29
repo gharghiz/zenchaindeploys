@@ -1,7 +1,6 @@
 (async () => {
   const connectBtn = document.getElementById('connectBtn');
   const deployBtn = document.getElementById('deployBtn');
-  const ctorInput = document.getElementById('ctorInput');
   const statusEl = document.getElementById('status');
   const loadingEl = document.getElementById('loading');
   const resultEl = document.getElementById('result');
@@ -13,18 +12,6 @@
 
   let provider = null;
   let signer = null;
-  let userAddress = null;
-
-  function parseCtorInput(text) {
-    if (!text) return null;
-    try {
-      const parsed = JSON.parse(text);
-      if (!Array.isArray(parsed)) throw new Error('Constructor args must be a JSON array');
-      return parsed;
-    } catch (err) {
-      throw new Error('Constructor args JSON invalid: ' + (err.message || err));
-    }
-  }
 
   async function connectWallet() {
     try {
@@ -55,7 +42,7 @@
       }
       provider = new ethers.BrowserProvider(window.ethereum);
       signer = await provider.getSigner();
-      userAddress = await signer.getAddress();
+      const userAddress = await signer.getAddress();
       statusEl.innerText = 'Connected: ' + userAddress;
       connectBtn.innerText = 'Wallet Connected';
     } catch (err) {
@@ -66,12 +53,11 @@
   async function deployContract() {
     try {
       if (!signer) await connectWallet();
-      const ctorArgs = parseCtorInput(ctorInput.value) || [];
       loadingEl.style.display = 'block';
       resultEl.style.display = 'none';
       copyBtn.style.display = 'none';
       const factory = new ethers.ContractFactory(ZTC_ABI, ZTC_BYTECODE, signer);
-      const contract = await factory.deploy(...ctorArgs);
+      const contract = await factory.deploy();
       statusEl.innerText = `Tx sent: ${contract.deployTransaction.hash}`;
       await contract.wait();
       loadingEl.style.display = 'none';
